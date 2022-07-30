@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 3.8)
 project ("single_dispatch_repo" VERSION 1.0.0)
 
 option(ASD_BUILD_TESTS "Build tests" ON) 
+option(ASD_BUILD_HEADER_ONLY "Build header only library" ON) 
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
 	#	-multiprocessor compilation (/MP) 
@@ -19,6 +20,12 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   
 	set(CMAKE_CXX_FLAGS_DEBUG "${MSVC_COMPILE_DEBUG_OPTIONS}")
 	set(CMAKE_CXX_FLAGS_RELEASE "${MSVC_COMPILE_RELEASE_OPTIONS}")
+endif()
+
+if (ASD_BUILD_HEADER_ONLY)
+	add_compile_definitions(ASD_HEADER_ONLY=1)
+else()
+	add_compile_definitions(ASD_HEADER_ONLY=0)
 endif()
 
 add_subdirectory ("lib")
