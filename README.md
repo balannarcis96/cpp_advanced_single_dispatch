@@ -1,6 +1,6 @@
-# cpp_advanced_single_dispatch [WIP]
-[C++ 17 and later] Advanced Single Dispatch Abstractions
+# [C++ 17 and later] Advanced Single Dispatch Abstractions
 
+  Minimum compiler version c++17 (201703).<br/>
   Function Pointer, Method Pointer and Delegate abtractions header only library.<br/>
   Function Pointer, Method Pointer and Delegate types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
   Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added.<br/>
