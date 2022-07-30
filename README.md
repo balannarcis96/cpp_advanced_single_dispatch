@@ -1,4 +1,4 @@
-# [C++ 17 and later] Advanced Single Dispatch Abstractions
+# [C++ 17 and later] Advanced Single Dispatch
 
   Minimum compiler version c++17 (201703).<br/>
   Function Pointer, Method Pointer and Delegate abtractions header only library.<br/>
