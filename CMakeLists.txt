@@ -4,24 +4,6 @@ project ("single_dispatch_repo" VERSION 1.0.0)
 option(ASD_BUILD_TESTS "Build tests" ON) 
 option(ASD_BUILD_HEADER_ONLY "Build header only library" ON) 
 
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-	#	-multiprocessor compilation (/MP) 
-	#	-c++ std version 17 (/std:c++17) 
-	#	-intrinsic functions(/Oi) 
-	#	-favor speed (/Ot)
-	#   -inline function expansion: Any Suitable (/Ob2)
-	#   -Multi-threaded (/MT)
-	#   -Specify floating-point behavior (/fp:fast) 
-	#	-Disable tls guard (/Zc:tlsGuards-) 
-
-    set(MSVC_COMPILE_OPTIONS "/MP /MT")
-    set(MSVC_COMPILE_DEBUG_OPTIONS "${CMAKE_CXX_FLAGS_DEBUG} ${MSVC_COMPILE_OPTIONS} /ZI /Od")
-    set(MSVC_COMPILE_RELEASE_OPTIONS "${CMAKE_CXX_FLAGS_RELEASE} ${MSVC_COMPILE_OPTIONS} /O2")
-  
-	set(CMAKE_CXX_FLAGS_DEBUG "${MSVC_COMPILE_DEBUG_OPTIONS}")
-	set(CMAKE_CXX_FLAGS_RELEASE "${MSVC_COMPILE_RELEASE_OPTIONS}")
-endif()
-
 if (ASD_BUILD_HEADER_ONLY)
 	add_compile_definitions(ASD_HEADER_ONLY=1)
 else()
@@ -29,7 +11,6 @@ else()
 endif()
 
 add_subdirectory ("lib")
-add_subdirectory ("examples")
 
 if(ASD_BUILD_TESTS)
 	# google test lib
