@@ -1,5 +1,11 @@
 # cpp_advanced_single_dispatch [WIP]
-[C++ 17] Advanced Single Dispatch Abstractions
+[C++ 17 and later] Advanced Single Dispatch Abstractions
+
+  Function Pointer, Method Pointer and Delegate abtractions header only library.<br/>
+  Function Pointer, Method Pointer and Delegate types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
+  Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added.<br/>
+  Code compiled on gcc 12.1, clang 14.0.0, msvc 19 -> arch: x64.<br/>
+  UTs are provided. UTs compiled and all pass on [Windows + msvc 19]<br/>
 
 ```cpp
   namespace ASD // Advanced Single Dispatch
@@ -7,15 +13,20 @@
 
 # Available usable types:
 ```cpp
-  ASD::FnPtr < void( void ) >                 // Simple function pointer wrapper type
-  ASD::MethodPtr < MyClass, void( void ) >    // Simple class function pointer (method) wrapper type
-  ASD::RawDelegate< MyClass, void( void )>    // Raw pointer delegate, holds raw ptr to instace of MyClass and raw ptr to method
-  ASD::UniqueDelegate< MyClass, void( void )> // Unique pointer delegate, holds unique ptr to instace of MyClass and raw ptr to method
-  ASD::SharedDelegate< MyClass, void( void )> // Shared pointer delegate, holds shared ptr to instace of MyClass and raw ptr to method
+  ASD::FnPtr<void(/*__cdecl*/*)( void )/*noexcept*/>        	       // Simple function pointer wrapper type 
+  ASD::MethodPtr<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>      // Simple class function pointer (method) wrapper type 
+  ASD::RawDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>    // Raw pointer delegate, holds raw ptr to instace of MyClass and raw ptr to method 
+  ASD::UniqueDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/> // Unique pointer delegate, holds unique ptr to instace of MyClass and raw ptr to method 
+  ASD::SharedDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/> // Shared pointer delegate, holds shared ptr to instace of MyClass and raw ptr to method 
+  
+  //sizeof( FnPtr<...> )          = sizeof( void* )
+  //sizeof( MethodPtr<...> )      = sizeof( void* )
+  //sizeof( RawDelegate<...> )    = sizeof( void* ) * 2
+  //sizeof( UniqueDelegate<...> ) = sizeof( void* ) * 2
+  //sizeof( SharedDelegate<...> ) = sizeof( void* ) * 2
 ```
 
 # How to
-  For full usage code see `examples/main.cpp`
  
 ```cpp
 	//!
@@ -37,7 +48,7 @@
 	//! [Usage Example] MethodPtr< ... > 
 	//!
 
-	const ASD::MethodPtr<TestType, int(/*calling convention goes here, if needed*/ MyClass::*)(int)> MethodPtr = &MyClass::DoSmth;
+	const ASD::MethodPtr<TestType, int(MyClass::*)(int)> MethodPtr = &MyClass::DoSmth;
 
 	ASD::MethodPtr<int(MyClass::*)(int)> MethodPtr2;
 	MethodPtr2 =  &MyClass::DoSmth2;
@@ -52,7 +63,7 @@
 	//! [Usage Example] RawDelegate< ... >
 	//!
 
-	const ASD::RawDelegate<int(/*calling convention goes here, if needed*/MyClass::*)(int)> RawDelegate1 = { &MyClass::DoSmth, &MyClassInstance1 };
+	const ASD::RawDelegate<int(MyClass::*)(int)> RawDelegate1 = { &MyClass::DoSmth, &MyClassInstance1 };
 
 	ASD::RawDelegate<int(MyClass::*)(int)> RawDelegate2;
 	RawDelegate2.SetMethodAndInstance( &MyClass::DoSmth, &MyClassInstance1 );
@@ -76,7 +87,7 @@
 	//! [Usage Example] UniqueDelegate< ... >
 	//!
 
-	const ASD::UniqueDelegate<int(/*calling convention goes here, if needed*/MyClass::*)(int)> UniqueDelegate1 = { &MyClass::DoSmth, std::make_unique<MyClass>() };
+	const ASD::UniqueDelegate<int(MyClass::*)(int)> UniqueDelegate1 = { &MyClass::DoSmth, std::make_unique<MyClass>() };
 
 	ASD::UniqueDelegate<int(MyClass::*)(int)> UniqueDelegate2;
 	UniqueDelegate2.SetMethodAndInstancePointers( &MyClass::DoSmth, std::move( MyClassUniquePtrInstance2 ) );
@@ -100,7 +111,7 @@
 	//! [Usage Example] SharedDelegate< ... >
 	//!
 
-	const ASD::SharedDelegate<int(/*calling convention goes here, if needed*/MyClass::*)(int)> SharedDelegate1 = { &MyClass::DoSmth, std::make_shared<MyClass>() };
+	const ASD::SharedDelegate<int(MyClass::*)(int)> SharedDelegate1 = { &MyClass::DoSmth, std::make_shared<MyClass>() };
 	//const ASD::SharedDelegate<int(MyClass::*)(int)> SharedDelegate1 = { &MyClass::DoSmth, MyClassInstance3 };
 	//const ASD::SharedDelegate<int(MyClass::*)(int)> SharedDelegate1 = { &MyClass::DoSmth, std::move( MyClassInstance3 ) };
 
