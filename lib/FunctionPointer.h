@@ -36,8 +36,8 @@ namespace ASD
 			return TFunctionTraits::GetCallingConventionName();
 		}
 
-        FnPtr() : TFunctionTraits (nullptr) {}
-        FnPtr( TFunctionPointer Pointer ) :  TFunctionTraits (Pointer) {}
+        FnPtr() : TFunctionTraits( nullptr ) {}
+        FnPtr( TFunctionPointer Pointer ) :  TFunctionTraits( Pointer ) {}
         
         ASD_FORCEINLINE void operator =( TFunctionPointer InPointer )
         {
@@ -58,15 +58,17 @@ namespace ASD
         {
 	        return nullptr == this->Pointer;
         }
+
+        static_assert( false == ASD::CallingConventions::HasThiscall || std::is_same_v<ASD::CallingConventions::Thiscall, CallingConvention>, "This call is unsupported!" );
     };
     
-    static_assert( sizeof ( FnPtr<void(ASD_CDECL*)(void)> ) == sizeof( void * ) );
-    static_assert( sizeof ( FnPtr<void(ASD_THISCALL*)(void)> ) == sizeof( void * ) );
-    static_assert( sizeof ( FnPtr<void(ASD_FASTCALL*)(void)> ) == sizeof( void * ) );
-    static_assert( sizeof ( FnPtr<void(ASD_VECTORCALL*)(void)> ) == sizeof( void * ) );
-    
-    static_assert( sizeof ( FnPtr<void(ASD_CDECL*)(void) noexcept> ) == sizeof( void * ) );
-    static_assert( sizeof ( FnPtr<void(ASD_THISCALL*)(void) noexcept> ) == sizeof( void * ) );
-    static_assert( sizeof ( FnPtr<void(ASD_FASTCALL*)(void) noexcept> ) == sizeof( void * ) );
-    static_assert( sizeof ( FnPtr<void(ASD_VECTORCALL*)(void) noexcept> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_CDECL* )( void )> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_THISCALL* )( void )> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_FASTCALL* )( void )> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_VECTORCALL* )( void )> ) == sizeof( void * ) );
+                                            
+    static_assert( sizeof ( FnPtr<void( ASD_CDECL* )( void ) noexcept> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_THISCALL* )( void ) noexcept> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_FASTCALL* )( void ) noexcept> ) == sizeof( void * ) );
+    static_assert( sizeof ( FnPtr<void( ASD_VECTORCALL* )( void ) noexcept> ) == sizeof( void * ) );
 }

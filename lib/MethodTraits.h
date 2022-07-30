@@ -55,7 +55,7 @@ namespace ASD
 		constexpr static bool IsVariadic = false;
 																															
 		MethodTraits() : Pointer{ nullptr } {}																				
-		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer>( &Pointer ) } {}															
+		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer*>( &Pointer ) } {}										
 		MethodTraits( const MethodTraits& Other ) = default;																
 																															
 		ASD_FORCEINLINE ReturnType ASD_CDECL operator()( TClass* Instance, Args... args ) const												
@@ -89,7 +89,7 @@ protected:
 		constexpr static bool IsVariadic = false;
 																															
 		MethodTraits() : Pointer{ nullptr } {}																				
-		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer>( &Pointer ) } {}															
+		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer*>( &Pointer ) } {}															
 		MethodTraits( const MethodTraits& Other ) = default;																
 																															
 		ASD_FORCEINLINE ReturnType ASD_CDECL operator()( TClass* Instance, Args... args ) const	noexcept											
@@ -126,7 +126,7 @@ protected:
 		constexpr static bool IsVariadic = false;																				\
 																																\
 		MethodTraits() : Pointer{ nullptr } {}																					\
-		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer>( &Pointer ) } {}							\
+		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer*>( &Pointer ) } {}							\
 		MethodTraits( const MethodTraits& Other ) = default;																	\
 																																\
 		ASD_FORCEINLINE ReturnType CallingConv operator()( TClass* Instance, Args... args ) const								\
@@ -160,7 +160,7 @@ protected:																														\
 		constexpr static bool IsVariadic = false;																				\
 																																\
 		MethodTraits() : Pointer{ nullptr } {}																					\
-		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer>( &Pointer ) } {}							\
+		MethodTraits( TMethodPointer Pointer ) : Pointer{ *reinterpret_cast<TPointer*>( &Pointer ) } {}							\
 		MethodTraits( const MethodTraits& Other ) = default;																	\
 																																\
 		ASD_FORCEINLINE ReturnType CallingConv operator()( TClass* Instance, Args... args ) const	noexcept					\

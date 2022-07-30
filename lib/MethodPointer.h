@@ -50,7 +50,7 @@ namespace ASD
         
 	    ASD_FORCEINLINE bool operator==( TMethodPointer InPointer ) const
 	    {
-	        return this->Pointer == *reinterpret_cast<TFunctionPointer*>( &InPointer );;
+	        return this->Pointer == *reinterpret_cast<TFunctionPointer*>( &InPointer );
 	    }
 
         ASD_FORCEINLINE explicit operator bool() const

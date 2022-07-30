@@ -20,6 +20,14 @@
 //c++17 and latter
 #define ASD_NODISCARD [[nodiscard]]
 
+#if __cplusplus > 201703 
+#define ASD_UNLIKELY [[unlikely]]
+#define ASD_LIKELY [[likely]]
+#else
+#define ASD_UNLIKELY 
+#define ASD_LIKELY
+#endif
+
 namespace ASD::Utils
 {
     // Most reliable way (i found + edit) to check if T is a functor with a specific signature
