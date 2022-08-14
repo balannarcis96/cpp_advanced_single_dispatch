@@ -12,6 +12,7 @@
 #include "tests/RawDelegateTests.h"
 #include "tests/UniqueDelegateTests.h"
 #include "tests/SharedDelegateTests.h"
+#include "tests/FunctorWrapperTests.h"
 
 int main( int argc, char** argv )
 {

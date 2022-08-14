@@ -14,4 +14,3 @@ target_link_libraries(SingleDispatchTests PUBLIC gtest_main)
 
 # Set C++17
 set_property(TARGET SingleDispatchTests PROPERTY CXX_STANDARD 17)
-

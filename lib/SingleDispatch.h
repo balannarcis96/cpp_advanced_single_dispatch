@@ -12,3 +12,4 @@
 #include "FunctionPointer.h"
 #include "MethodPointer.h"
 #include "Delegate.h"
+#include "FunctorWrapper.h"
