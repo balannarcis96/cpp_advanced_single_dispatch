@@ -1,9 +1,9 @@
 # [C++ 17 and later] Advanced Single Dispatch
 
   Minimum compiler version c++17 (201703).<br/>
-  Function Pointer, Method Pointer and Delegate abtractions header only library.<br/>
-  Function Pointer, Method Pointer and Delegate types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
-  Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added.<br/>
+  Function Pointer, Method Pointer Delegate and Functor Wrapper abtractions header only library.<br/>
+  Function Pointer, Method Pointer Delegate and Functor Wrapper types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
+  Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added. (only __cdecl for functor wrapper)<br/>
   Code compiled on gcc 12.1, clang 14.0.0, msvc 19 -> arch: x64.<br/>
   UTs are provided. UTs compiled and all pass on [Windows + msvc 19]<br/>
 
@@ -13,11 +13,15 @@
 
 # Available usable types:
 ```cpp
-  ASD::FnPtr<void(/*__cdecl*/*)( void )/*noexcept*/>        	       // Simple function pointer wrapper type 
-  ASD::MethodPtr<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>      // Simple class function pointer (method) wrapper type 
-  ASD::RawDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>    // Raw pointer delegate, holds raw ptr to instace of MyClass and raw ptr to method 
-  ASD::UniqueDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/> // Unique pointer delegate, holds unique ptr to instace of MyClass and raw ptr to method 
-  ASD::SharedDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/> // Shared pointer delegate, holds shared ptr to instace of MyClass and raw ptr to method 
+  ASD::FnPtr<void(/*__cdecl*/*)( void )/*noexcept*/>        	          // Simple function pointer wrapper type 
+  ASD::MethodPtr<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>         // Simple class function pointer (method) wrapper type 
+  ASD::RawDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>       // Raw pointer delegate, holds raw ptr to instace of MyClass and raw ptr to method 
+  ASD::UniqueDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>    // Unique pointer delegate, holds unique ptr to instace of MyClass and raw ptr to method 
+  ASD::SharedDelegate<void(/*__cdecl*/MyClass::*)( void )/*noexcept*/>    // Shared pointer delegate, holds shared ptr to instace of MyClass and raw ptr to method 
+  ASD::TrivialFunctorWrapper<8, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(copy/move) trivial functor instancies (see tests)
+  ASD::UniqueFunctorWrapper<24, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(copy/move) (optional:trivial) functor instancies -> it only performs correct destruction no copy or move (see tests)
+  ASD::CopyFunctorWrapper<24, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(copy) (optional:trivial) functor instancies -> it can be copied only and performs correct destruction (see tests) 
+  ASD::MoveFunctorWrapper<24, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(move) (optional:trivial) functor instancies -> it can be moved only and performs correct destruction (see tests)
   
   //sizeof( FnPtr<...> )          = sizeof( void* )
   //sizeof( MethodPtr<...> )      = sizeof( void* )
@@ -133,6 +137,9 @@
 		result += SharedDelegate1.Dispatch( MyClassInstance3.get(), 2 );
 		result += SharedDelegate2.Dispatch( MyClassInstance1, 2 );
 	}
+	
+	//@TODO: Usage example for Functor Wrapper types.
+	//For now please see FunctorWrapperTests.h		
 ```
 # Dependencies
   ```cpp
