@@ -1,9 +1,9 @@
 # [C++ 17 and later] Advanced Single Dispatch
 
   Minimum compiler version c++17 (201703).<br/>
-  Function Pointer, Method Pointer Delegate and Functor Wrapper abtractions header only library.<br/>
-  Function Pointer, Method Pointer Delegate and Functor Wrapper types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
-  Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added. (only __cdecl for functor wrapper)<br/>
+  Function Pointer, Method Pointer Delegate Functor Wrapper and Task abtractions header only library.<br/>
+  Function Pointer, Method Pointer Delegate Functor Wrapper and Task types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
+  Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added. (only __cdecl for functor wrapper and task)<br/>
   Code compiled on gcc 12.1, clang 14.0.0, msvc 19 -> arch: x64.<br/>
   UTs are provided. UTs compiled and all pass on [Windows + msvc 19]<br/>
 
@@ -22,6 +22,7 @@
   ASD::UniqueFunctorWrapper<24, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(copy/move) (optional:trivial) functor instancies -> it only performs correct destruction no copy or move (see tests)
   ASD::CopyFunctorWrapper<24, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(copy) (optional:trivial) functor instancies -> it can be copied only and performs correct destruction (see tests) 
   ASD::MoveFunctorWrapper<24, void(/*__cdecl*/*)( void )/*noexcept*/>   // Wrapper class that accepts(move) (optional:trivial) functor instancies -> it can be moved only and performs correct destruction (see tests)
+  ASD::Task<24> //Simple but powerfull task abstraction 
   
   //sizeof( FnPtr<...> )          = sizeof( void* )
   //sizeof( MethodPtr<...> )      = sizeof( void* )
@@ -139,7 +140,10 @@
 	}
 	
 	//@TODO: Usage example for Functor Wrapper types.
-	//For now please see FunctorWrapperTests.h		
+	//For now please see FunctorWrapperTests.h	
+	
+	//@TODO: Usage example for Task type.
+	//For now please see TaskTests.h	
 ```
 # Dependencies
   ```cpp
