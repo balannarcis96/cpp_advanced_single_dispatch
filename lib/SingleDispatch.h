@@ -13,3 +13,4 @@
 #include "MethodPointer.h"
 #include "Delegate.h"
 #include "FunctorWrapper.h"
+#include "Task.h"
