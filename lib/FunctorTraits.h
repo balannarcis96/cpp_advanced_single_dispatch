@@ -124,14 +124,14 @@ namespace ASD
         template<typename TFunctor>                                                                                                                                                                 \
         ASD_FORCEINLINE void operator+=( TFunctor&& lambda ) NOEXCEPT_VALUE                                                                                                                         \
         {                                                                                                                                                                                           \
-            static_assert(ASD::is_functor_v<TFunctor, ReturnType( Args... ) NOEXCEPT_VALUE>, "The givent type must be a functor of the required type!");                                            \
+            static_assert( ASD::is_functor_v<TFunctor, ReturnType( Args... ) NOEXCEPT_VALUE>, "The givent type must be a functor of the required type!" );                                          \
             BuildHandler( std::forward<TFunctor>( lambda ) );                                                                                                                                       \
         }                                                                                                                                                                                           \
                                                                                                                                                                                                     \
         template<typename TFunctor>                                                                                                                                                                 \
         ASD_FORCEINLINE void SetFunctor( TFunctor&& lambda ) NOEXCEPT_VALUE                                                                                                                         \
         {                                                                                                                                                                                           \
-            static_assert(ASD::is_functor_v<TFunctor, ReturnType( Args... ) NOEXCEPT_VALUE>, "The givent type must be a functor of the required type!");                                            \
+            static_assert( ASD::is_functor_v<TFunctor, ReturnType( Args... ) NOEXCEPT_VALUE>, "The givent type must be a functor of the required type!" );                                          \
             BuildHandler( std::forward<TFunctor>( lambda ) );                                                                                                                                       \
         }                                                                                                                                                                                           \
                                                                                                                                                                                                     \
@@ -224,7 +224,7 @@ namespace ASD
         template<typename TFunctor>                                                                                                                                                                 \
         ASD_FORCEINLINE void operator+=( const TFunctor& lambda ) NOEXCEPT_VALUE                                                                                                                    \
         {                                                                                                                                                                                           \
-            static_assert(ASD::is_functor_v<std::decay_t<TFunctor>, ReturnType( Args... ) const NOEXCEPT_VALUE>, "The givent type must be a functor of the required type!");                        \
+            static_assert(ASD::is_functor_v<TFunctor, ReturnType( Args... ) NOEXCEPT_VALUE>, "The givent type must be a functor of the required type!");                                      \
             BuildHandler( lambda );                                                                                                                                                                 \
         }                                                                                                                                                                                           \
                                                                                                                                                                                                     \
@@ -481,8 +481,8 @@ protected:                                                                      
             static_assert( sizeof( TFunctor ) <= FunctorSize, "The given functor's size must be smaller or equal to FunctorSize" );                                                                 \
             static_assert( !bStrict || !asd_is_trivial_v<TFunctor>, "The provided functor (TFunctor) must not be trivial, use TrivialFuctorTraits instead!" );                                      \
             constexpr bool bIsCopyable = NOEXCEPT_BOOL_VALUE ?                                                                                                                                      \
-                                std::is_nothrow_copy_constructible_v<TFunctor> && std::is_nothrow_copy_assignable_v<TFunctor> :                                                                     \
-                                std::is_copy_constructible_v<TFunctor> && std::is_copy_assignable_v<TFunctor>;                                                                                      \
+                                std::is_nothrow_copy_constructible_v<TFunctor> :                                                                                                                    \
+                                std::is_copy_constructible_v<TFunctor>;                                                                                                                             \
             static_assert( bIsCopyable, "The provided Functor must be copy constructible and assignable" );                                                                                         \
             static_assert( !NOEXCEPT_BOOL_VALUE || std::is_nothrow_destructible_v<TFunctor>, "The provided Functor must be noexcept destructible" );                                                \
             static_assert( !NOEXCEPT_BOOL_VALUE || std::is_nothrow_invocable_v<TFunctor, Args...> , "The given functor's call operator must be noexexcept" );                                       \
@@ -680,8 +680,8 @@ protected:                                                                      
             static_assert( sizeof( TFunctor ) <= FunctorSize, "The given functor's size must be smaller or equal to FunctorSize" );                                                                 \
             static_assert( !bStrict || !asd_is_trivial_v<TFunctor>, "The provided functor (TFunctor) must not be trivial, use TrivialFuctorTraits instead!" );                                      \
             constexpr bool bIsMoveable = NOEXCEPT_BOOL_VALUE ?                                                                                                                                      \
-                                std::is_nothrow_move_constructible_v<TFunctor> && std::is_nothrow_move_assignable_v<TFunctor> :                                                                     \
-                                std::is_move_constructible_v<TFunctor> && std::is_move_assignable_v<TFunctor>;                                                                                      \
+                                std::is_nothrow_move_constructible_v<TFunctor>:                                                                                                                     \
+                                std::is_move_constructible_v<TFunctor>;                                                                                                                             \
             static_assert( bIsMoveable, "The provided Functor must be move constructible and assignable" );                                                                                         \
             static_assert( !NOEXCEPT_BOOL_VALUE || std::is_nothrow_destructible_v<TFunctor>, "The provided Functor must be noexcept destructible" );                                                \
             static_assert( !NOEXCEPT_BOOL_VALUE || std::is_nothrow_invocable_v<TFunctor, Args...> , "The given functor's call operator must be noexexcept" );                                       \

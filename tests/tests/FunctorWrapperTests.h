@@ -37,7 +37,7 @@ namespace FunctorWrapperTests
 		size_t a = 55;
 		size_t b = 22;
 
-		TrivialFunctor += [&a](int x) noexcept -> int
+		TrivialFunctor += [&a](int x) mutable noexcept -> int
 		{
 			return static_cast<int> ( a ) + x;
 		};
@@ -46,7 +46,7 @@ namespace FunctorWrapperTests
 	
 		ASSERT_TRUE( TrivialFunctor( 5 ) == a + 5 );
 
-		TrivialFunctor += [&a](int x) noexcept -> int
+		TrivialFunctor += [&a](int x) mutable noexcept -> int
 		{
 			return static_cast<int> ( a ) + x + 1;
 		};
@@ -69,7 +69,7 @@ namespace FunctorWrapperTests
 
 	TEST( FunctorWrapperTests, UniqueFunctorWrapper_BasicAPI )
 	{
-		ASD::UniqueFunctorWrapper<16, int(*)(int)> UniqueFunctor;
+		ASD::UniqueFunctorWrapper<16, int(*)(int) noexcept> UniqueFunctor;
 		
 		ASSERT_TRUE( true == UniqueFunctor.IsNull() );
 
@@ -80,7 +80,7 @@ namespace FunctorWrapperTests
 
 		ASSERT_TRUE( SPtr.use_count() == 1 );
 
-		UniqueFunctor += [&a](int x) -> int
+		UniqueFunctor += [&a](int x) noexcept-> int
 		{
 			return static_cast<int> ( a ) + x;
 		};
@@ -90,7 +90,7 @@ namespace FunctorWrapperTests
 	
 		ASSERT_TRUE( UniqueFunctor( 5 ) == a + 5 );
 
-		UniqueFunctor += [SPtr](int x) -> int
+		UniqueFunctor += [SPtr](int x) noexcept -> int
 		{
 			return static_cast<int> ( SPtr->AdditionalValue ) + x + 1;
 		};
@@ -106,7 +106,7 @@ namespace FunctorWrapperTests
 		ASSERT_TRUE( SPtr.use_count() == 1 ); //back to 2 shared ref, the ref inside the functor was destroyed
 		ASSERT_TRUE( true == UniqueFunctor.IsNull() );
 
-		const auto NewFunctor = [SPtr](int x) -> int
+		const auto NewFunctor = [SPtr](int x) noexcept -> int
 		{
 			return static_cast<int> ( SPtr->AdditionalValue ) + x + 1;
 		};
@@ -128,7 +128,7 @@ namespace FunctorWrapperTests
 
 	TEST( FunctorWrapperTests, CopyFunctorWrapper_BasicAPI )
 	{
-		ASD::CopyFunctorWrapper<16, int(*)(int)> CopyFunctor;
+		ASD::CopyFunctorWrapper<16, int(*)(int) noexcept> CopyFunctor;
 		
 		ASSERT_TRUE( true == CopyFunctor.IsNull() );
 
