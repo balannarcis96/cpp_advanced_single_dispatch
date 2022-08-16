@@ -1,8 +1,8 @@
 # [C++ 17 and later] Advanced Single Dispatch
 
   Minimum compiler version c++17 (201703).<br/>
-  Function Pointer, Method Pointer Delegate Functor Wrapper and Task abtractions header only library.<br/>
-  Function Pointer, Method Pointer Delegate Functor Wrapper and Task types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
+  Function Pointer, Method Pointer, Delegate, Functor Wrapper and Task abtractions header only library.<br/>
+  Function Pointer, Method Pointer, Delegate, Functor Wrapper and Task types are sensitive to the calling convention of the function type and presence of `noexcept`.<br/>
   Supported calling convetions: `__cdecl, __stdcall, __thiscall, __fastcall, __vectorcall`, other can be added. (only __cdecl for functor wrapper and task)<br/>
   Code compiled on gcc 12.1, clang 14.0.0, msvc 19 -> arch: x64.<br/>
   UTs are provided. UTs compiled and all pass on [Windows + msvc 19]<br/>
