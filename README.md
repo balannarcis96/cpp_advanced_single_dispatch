@@ -1,3 +1,5 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/65631a1adbd5440f91d43d5586de8c72)](https://www.codacy.com/gh/balannarcis96/cpp_advanced_single_dispatch/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=balannarcis96/cpp_advanced_single_dispatch&amp;utm_campaign=Badge_Grade)
+
 # [C++ 17 and later] Advanced Single Dispatch
 
   Minimum compiler version c++17 (201703).<br/>
